@@ -10,4 +10,9 @@ if [ ! -d "node_modules" ] || [ "$(ls -A node_modules)" = "" ]; then
     yarn
 fi
 
-BROWSER=0 yarn start:browser
+if [ "$SERVICE" = "mcp" ]; then
+    yarn workspace @grounded-ai/app build:mcp
+    exec node packages/grounded-ai/dist/mcp-bridge/server.js
+else
+    BROWSER=0 yarn start:browser
+fi
