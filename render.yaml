@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: grounded-ai-mcp
+    runtime: docker
+    dockerfilePath: ./Dockerfile.grounded-ai-mcp
+    envVars:
+      - key: PORT
+        value: 3001
+      - key: MCP_BEARER_TOKEN
+        sync: false
+      - key: ACTUAL_SERVER_URL
+        sync: false
+      - key: ACTUAL_BUDGET_ID
+        sync: false
+      - key: ACTUAL_PASSWORD
+        sync: false
+      - key: ACTUAL_DATA_DIR
+        value: /tmp/actual-data
