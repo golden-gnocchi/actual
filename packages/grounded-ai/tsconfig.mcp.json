@@ -5,7 +5,8 @@
     "rootDir": "./src",
     "module": "esnext",
     "target": "es2020",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "noEmit": false
   },
   "include": ["src/mcp-bridge/**/*"],
   "exclude": ["node_modules", "src/web-app"]
