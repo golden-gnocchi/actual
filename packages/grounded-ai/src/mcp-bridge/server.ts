@@ -6,17 +6,46 @@ app.use(express.json());
 
 // Environment variables
 const PORT = process.env.PORT || 3001;
-const BEARER_TOKEN = process.env.MCP_BEARER_TOKEN || 'dev-token';
+const OAUTH_CLIENT_ID = process.env.OAUTH_CLIENT_ID || 'grounded-ai';
+const OAUTH_CLIENT_SECRET = process.env.OAUTH_CLIENT_SECRET || 'dev-secret';
 const ACTUAL_SERVER_URL = process.env.ACTUAL_SERVER_URL || 'http://localhost:5006';
 const ACTUAL_BUDGET_ID = process.env.ACTUAL_BUDGET_ID || '';
 const ACTUAL_PASSWORD = process.env.ACTUAL_PASSWORD || '';
+
+// Simple in-memory token store (stateless: token = client_secret)
+// Claude.ai exchanges client_id + client_secret for an access token
+const issuedTokens = new Set<string>();
+
+// OAuth 2.0: Token endpoint
+// Claude.ai posts client_id + client_secret here to get an access token
+app.post('/oauth/token', (req: Request, res: Response) => {
+  const { client_id, client_secret, grant_type } = req.body;
+
+  if (
+    grant_type !== 'client_credentials' ||
+    client_id !== OAUTH_CLIENT_ID ||
+    client_secret !== OAUTH_CLIENT_SECRET
+  ) {
+    return res.status(401).json({ error: 'invalid_client' });
+  }
+
+  const accessToken = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
+  issuedTokens.add(accessToken);
+
+  res.json({
+    access_token: accessToken,
+    token_type: 'Bearer',
+    expires_in: 3600,
+  });
+});
 
 // Middleware: Bearer token validation
 const authenticateMCP = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
   const token = authHeader?.split(' ')[1];
+  const expectedToken = Buffer.from(`${OAUTH_CLIENT_ID}:${OAUTH_CLIENT_SECRET}`).toString('base64');
 
-  if (token !== BEARER_TOKEN) {
+  if (token !== expectedToken) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
