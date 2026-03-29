@@ -188,5 +188,5 @@ app.get('/health', (req: Request, res: Response) => {
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 MCP Bridge running on port ${PORT}`);
-  console.log(`📍 Connect to Claude.ai with Bearer token: ${BEARER_TOKEN}`);
+  console.log(`📍 Connect to Claude.ai with Client ID: ${OAUTH_CLIENT_ID}`);
 });
