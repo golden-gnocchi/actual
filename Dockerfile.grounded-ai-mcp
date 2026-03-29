@@ -1,0 +1,20 @@
+###################################################
+# Dockerfile for GroundedAI MCP Bridge Service
+# Deployed on Render
+###################################################
+
+FROM node:22-bookworm
+
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y openssl
+
+WORKDIR /app
+
+# Copy entire repository
+COPY . .
+
+# Install dependencies and build MCP bridge
+RUN yarn install --frozen-lockfile
+RUN yarn workspace @grounded-ai/app build:mcp
+
+# Start MCP bridge service
+CMD ["node", "packages/grounded-ai/dist/mcp-bridge/server.js"]
