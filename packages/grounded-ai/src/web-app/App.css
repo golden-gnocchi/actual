@@ -1,0 +1,126 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fafaf9 0%, #f5f3ff 100%);
+}
+
+.app-header {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-dark) 100%);
+  color: white;
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+.logo {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.mascot {
+  font-size: 3rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.logo h1 {
+  color: white;
+  margin: 0;
+}
+
+.tagline {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.875rem;
+  font-style: italic;
+  margin: 0;
+}
+
+.app-main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: var(--spacing-xl);
+}
+
+.loading-container,
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-xl);
+}
+
+.tortoise-loader {
+  font-size: 4rem;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-container p {
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
+}
+
+.error-container {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-md);
+  max-width: 400px;
+  text-align: center;
+}
+
+.error-container h1 {
+  color: var(--color-danger);
+}
+
+.error-container p {
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    padding: var(--spacing-lg);
+  }
+
+  .logo {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--spacing-md);
+  }
+
+  .mascot {
+    font-size: 2rem;
+  }
+
+  .logo h1 {
+    font-size: 1.5rem;
+  }
+
+  .app-main {
+    padding: var(--spacing-lg);
+  }
+}

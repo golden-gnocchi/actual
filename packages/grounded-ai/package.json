@@ -1,0 +1,35 @@
+{
+  "name": "@grounded-ai/app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"yarn dev:web\" \"yarn dev:mcp\"",
+    "dev:web": "vite --config vite.web.config.ts",
+    "dev:mcp": "tsx watch src/mcp-bridge/server.ts",
+    "build": "yarn build:web && yarn build:mcp",
+    "build:web": "vite build --config vite.web.config.ts",
+    "build:mcp": "tsc --project tsconfig.mcp.json",
+    "start:web": "vite preview --config vite.web.config.ts",
+    "start:mcp": "node dist/mcp-bridge/server.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx"
+  },
+  "dependencies": {
+    "@actual-app/api": "workspace:*",
+    "@anthropic-ai/sdk": "^0.24.0",
+    "express": "^4.18.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.6",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "concurrently": "^8.2.2",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8"
+  }
+}

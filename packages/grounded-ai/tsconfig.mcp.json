@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "module": "esnext",
+    "target": "es2020",
+    "moduleResolution": "bundler"
+  },
+  "include": ["src/mcp-bridge/**/*"],
+  "exclude": ["node_modules", "src/web-app"]
+}

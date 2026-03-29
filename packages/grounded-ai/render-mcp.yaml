@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: grounded-ai-mcp
+    runtime: node
+    plan: free
+    buildCommand: cd ../.. && yarn install && yarn workspace @grounded-ai/app build:mcp
+    startCommand: node packages/grounded-ai/dist/mcp-bridge/server.js
+    envVars:
+      - key: MCP_BEARER_TOKEN
+        scope: build,runtime
+      - key: ACTUAL_SERVER_URL
+        scope: build,runtime
+      - key: ACTUAL_BUDGET_ID
+        scope: build,runtime
+      - key: ACTUAL_PASSWORD
+        scope: build,runtime
+        isFile: false
+      - key: ACTUAL_DATA_DIR
+        value: /tmp/actual-data
+        scope: build,runtime
+      - key: PORT
+        value: 3001
+        scope: build,runtime
