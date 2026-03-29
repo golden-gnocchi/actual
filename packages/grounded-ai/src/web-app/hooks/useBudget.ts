@@ -36,8 +36,8 @@ export function useBudget() {
     loading,
     error,
     getBudgetStatus: (month?: string) => callMCPTool('get_budget_status', { month }),
-    getTransactions: (limit?: number, categoryId?: string) =>
-      callMCPTool('get_transactions', { limit, categoryId }),
+    getTransactions: (accountId: string, startDate: string, endDate: string) =>
+      callMCPTool('get_transactions', { accountId, startDate, endDate }),
     logTransaction: (accountId: string, transactions: unknown[]) =>
       callMCPTool('log_transaction', { accountId, transactions }),
     updateCategoryBudget: (month: string, categoryId: string, amount: number) =>

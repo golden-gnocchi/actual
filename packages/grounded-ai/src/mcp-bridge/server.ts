@@ -62,7 +62,7 @@ app.post('/mcp/tools/get_budget_status', authenticateMCP, async (req: Request, r
 
     res.json({
       month,
-      categories: budget.byCategory || [],
+      categories: budget.categoryGroups || [],
       totalBudgeted: budget.totalBudgeted || 0,
       totalSpent: budget.totalSpent || 0,
       remaining: (budget.totalBudgeted || 0) - (budget.totalSpent || 0),
@@ -79,8 +79,8 @@ app.post('/mcp/tools/get_transactions', authenticateMCP, async (req: Request, re
   try {
     await initializeActual();
 
-    const { limit = 50, categoryId } = req.body;
-    const transactions = await api.getTransactions(limit, { categoryId });
+    const { accountId, startDate, endDate } = req.body;
+    const transactions = await api.getTransactions(accountId, startDate, endDate);
 
     res.json({ transactions });
   } catch (error) {
@@ -143,7 +143,7 @@ app.post('/mcp/tools/run_bank_sync', authenticateMCP, async (req: Request, res: 
   try {
     await initializeActual();
 
-    const result = await api.syncAccounts();
+    const result = await api.runBankSync();
 
     res.json({ success: true, result });
   } catch (error) {
