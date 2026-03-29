@@ -1,0 +1,10 @@
+services:
+  - type: static_site
+    name: grounded-ai-web
+    buildCommand: cd ../.. && yarn install && yarn workspace @grounded-ai/app build:web
+    staticPublishPath: packages/grounded-ai/dist/web
+    envVars:
+      - key: VITE_MCP_BRIDGE_URL
+        scope: build
+      - key: VITE_MCP_BEARER_TOKEN
+        scope: build
